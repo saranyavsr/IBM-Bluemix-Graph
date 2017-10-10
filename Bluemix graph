@@ -1,0 +1,287 @@
+  //gds token
+
+  curl -X "GET" https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/_session \
+  -H 'content-type: application/json' \
+  -u "81101f4b-bc03-4565-999d-353dfc0161da:ce990edf-3b1d-422c-94d3-7a7af1700407" || json_pp
+
+
+  //output
+  ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=
+
+
+//create schema
+
+  curl -X "POST"  "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/schema" \
+  -H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+  -H "Content-Type: application/json" \
+  -d "{\"propertyKeys\":[{\"name\":\"name\",\"dataType\":\"String\",\"cardinality\":\"SINGLE\"},{\"name\":\"languages\",\"dataType\":\"String\",\"cardinality\":\"SINGLE\"},{\"name\":\"picture\",\"dataType\":\"String\",\"cardinality\":\"SINGLE\"},{\"name\":\"preferred_language\",\"dataType\":\"String\",\"cardinality\":\"SINGLE\"},{\"name\":\"bytes\",\"dataType\":\"Integer\",\"cardinality\":\"SINGLE\"},{\"name\":\"github_id\",\"dataType\":\"String\",\"cardinality\":\"SINGLE\"},{\"name\":\"twitter_id\",\"dataType\":\"String\",\"cardinality\":\"SINGLE\"},{\"name\":\"language_percentage\",\"dataType\":\"Float\",\"cardinality\":\"SINGLE\"}],\"vertexLabels\":[{\"name\":\"person\"},{\"name\":\"language\"}],\"edgeLabels\":[{\"name\":\"codes_in\",\"multiplicity\":\"MULTI\"},{\"name\":\"used_by\",\"multiplicity\":\"MULTI\"}],\"vertexIndexes\":[{\"name\":\"vByName\",\"propertyKeys\":[\"name\"],\"composite\":true,\"unique\":false},{\"name\":\"vByPreferredLang\",\"propertyKeys\":[\"preferred_language\"],\"composite\":true,\"unique\":false},{\"name\":\"vByLanguages\",\"propertyKeys\":[\"languages\"],\"composite\":false,\"unique\":false}],\"edgeIndexes\":[{\"name\":\"eByName\",\"propertyKeys\":[\"name\"],\"composite\":true,\"unique\":false},{\"name\":\"eByLanguagePercentage\",\"propertyKeys\":[\"language_percentage\"],\"composite\":true,\"unique\":false}]}" || json_pp
+
+  //output:
+
+  {
+	"requestId": "970fbf0a-c09f-4c55-95c9-2ee420f7ddbc",
+	"status": {
+		"message": "",
+		"code": 200,
+		"attributes": {}
+	},
+	"result": {
+		"data": [{
+			"propertyKeys": [{
+				"name": "name",
+				"dataType": "String",
+				"cardinality": "SINGLE"
+			}, {
+				"name": "languages",
+				"dataType": "String",
+				"cardinality": "SINGLE"
+			}, {
+				"name": "picture",
+				"dataType": "String",
+				"cardinality": "SINGLE"
+			}, {
+				"name": "preferred_language",
+				"dataType": "String",
+				"cardinality": "SINGLE"
+			}, {
+				"name": "bytes",
+				"dataType": "Integer",
+				"cardinality": "SINGLE"
+			}, {
+				"name": "github_id",
+				"dataType": "String",
+				"cardinality": "SINGLE"
+			}, {
+				"name": "twitter_id",
+				"dataType": "String",
+				"cardinality": "SINGLE"
+			}, {
+				"name": "language_percentage",
+				"dataType": "Float",
+				"cardinality": "SINGLE"
+			}],
+			"vertexLabels": [{
+				"name": "person"
+			}, {
+				"name": "language"
+			}],
+			"edgeLabels": [{
+				"name": "codes_in",
+				"directed": true,
+				"multiplicity": "MULTI"
+			}, {
+				"name": "used_by",
+				"directed": true,
+				"multiplicity": "MULTI"
+			}],
+			"vertexIndexes": [{
+				"name": "vByName",
+				"composite": true,
+				"unique": false,
+				"propertyKeys": ["name"],
+				"requiresReindex": false,
+				"type": "vertex"
+			}, {
+				"name": "vByPreferredLang",
+				"composite": true,
+				"unique": false,
+				"propertyKeys": ["preferred_language"],
+				"requiresReindex": false,
+				"type": "vertex"
+			}, {
+				"name": "vByLanguages",
+				"composite": false,
+				"unique": false,
+				"propertyKeys": ["languages"],
+				"requiresReindex": false,
+				"type": "vertex"
+			}],
+			"edgeIndexes": [{
+				"name": "eByName",
+				"composite": true,
+				"unique": false,
+				"propertyKeys": ["name"],
+				"requiresReindex": false,
+				"type": "edge"
+			}, {
+				"name": "eByLanguagePercentage",
+				"composite": true,
+				"unique": false,
+				"propertyKeys": ["language_percentage"],
+				"requiresReindex": false,
+				"type": "edge"
+			}]
+		}],
+		"meta": {}
+	}
+}
+
+
+
+//create vertex (person)
+
+//v1:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/vertices" \
+-H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+-H "Content-Type: application/json" \
+-d '{"name": "Saranya SoundarRajan", "languages": "Java,Node", "preferred_language":"Node", "twitter_id":"saranyavsr", "label": "person"}' || json_pp
+
+//output:
+{"requestId":"12d94927-21df-463e-8819-3057fb5beae5","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":4344,"label":"person","type":"vertex","properties":{"languages":[{"id":"17j-3co-1l1","value":"Java,Node"}],"name":[{"id":"1lr-3co-sl","value":"Saranya SoundarRajan"}],"twitter_id":[{"id":"1zz-3co-5j9","value":"saranyavsr"}],"preferred_language":[{"id":"2e7-3co-35x","value":"Node"}]}}],"meta":{}}}
+
+
+
+//v2:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/vertices" \
+-H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+-H "Content-Type: application/json" \
+-d '{"name": "Arshiya Pathan", "languages": "Python", "preferred_language":"Python", "twitter_id":"Unknown", "label": "person"}' || json_pp
+
+
+//output:
+
+{"requestId":"2703cc89-e14f-4028-ba7e-0e54dba3aef6","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":4240,"label":"person","type":"vertex","properties":{"languages":[{"id":"176-39s-1l1","value":"Python"}],"name":[{"id":"1le-39s-sl","value":"Arshiya Pathan"}],"twitter_id":[{"id":"1zm-39s-5j9","value":"Unknown"}],"preferred_language":[{"id":"2du-39s-35x","value":"Python"}]}}],"meta":{}}}
+
+//v3:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/vertices" \
+-H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+-H "Content-Type: application/json" \
+-d '{"name": "Vasu Bansal", "languages": "Perl", "preferred_language":"Perl", "twitter_id":"Unknown", "label": "person"}' || json_pp
+
+//output:
+{"requestId":"cdd1c6dc-04a7-4a79-96b2-cdd576f28212","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":4272,"label":"person","type":"vertex","properties":{"languages":[{"id":"17a-3ao-1l1","value":"Perl"}],"name":[{"id":"1li-3ao-sl","value":"Vasu Bansal"}],"twitter_id":[{"id":"1zq-3ao-5j9","value":"Unknown"}],"preferred_language":[{"id":"2dy-3ao-35x","value":"Perl"}]}}],"meta":{}}}
+
+//v4:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/vertices" \
+-H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+-H "Content-Type: application/json" \
+-d '{"name": "Zeeshan Ali", "languages": "Perl,Javascript", "preferred_language":"Javascript", "twitter_id":"Unknown", "label": "person"}' || json_pp
+
+//output:
+{"requestId":"f2f0bd2a-3ffc-402c-8266-59bf62d38728","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":4256,"label":"person","type":"vertex","properties":{"languages":[{"id":"178-3a8-1l1","value":"Perl,Javascript"}],"name":[{"id":"1lg-3a8-sl","value":"Zeeshan Ali"}],"twitter_id":[{"id":"1zo-3a8-5j9","value":"Unknown"}],"preferred_language":[{"id":"2dw-3a8-35x","value":"Javascript"}]}}],"meta":{}}}
+
+
+//create vertex (languages)
+
+//v1:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/vertices" \
+-H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+-H "Content-Type: application/json" \
+-d '{"name": "Java", "label": "language"}' || json_pp
+
+//output:
+{"requestId":"b5739f18-a9ab-4bfc-ad16-a9ac15cd85d4","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":4160,"label":"language","type":"vertex","properties":{"name":[{"id":"16w-37k-sl","value":"Java"}]}}],"meta":{}}}
+
+
+//v2:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/vertices" \
+-H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+-H "Content-Type: application/json" \
+-d '{"name": "Node", "label": "language"}' || json_pp
+
+//output:
+{"requestId":"5cf8684b-ab43-47b2-8adb-90ceb58bb0e9","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":4304,"label":"language","type":"vertex","properties":{"name":[{"id":"17e-3bk-sl","value":"Node"}]}}],"meta":{}}}
+
+
+//v3:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/vertices" \
+-H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+-H "Content-Type: application/json" \
+-d '{"name": "Perl", "label": "language"}' || json_pp
+
+//output:
+{"requestId":"3d834e53-90b2-4809-9b3d-128eec7377e0","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":4136,"label":"language","type":"vertex","properties":{"name":[{"id":"16t-36w-sl","value":"Perl"}]}}],"meta":{}}}
+
+
+//v4:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/vertices" \
+-H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+-H "Content-Type: application/json" \
+-d '{"name": "Python", "label": "language"}' || json_pp
+
+//output:
+{"requestId":"3c34ec66-3877-42a1-bfab-44cd55740749","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":4232,"label":"language","type":"vertex","properties":{"name":[{"id":"175-39k-sl","value":"Python"}]}}],"meta":{}}}
+
+
+//v5:
+
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/vertices" \
+-H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+-H "Content-Type: application/json" \
+-d '{"name": "Javascript", "label": "language"}' || json_pp
+
+
+//output:
+{"requestId":"585d3165-89cf-4004-99fc-5fac6d337dab","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":4208,"label":"language","type":"vertex","properties":{"name":[{"id":"172-38w-sl","value":"Javascript"}]}}],"meta":{}}}
+
+
+
+//create edge
+
+//e1:
+  curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/edges" \
+  -H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+  -H "Content-Type: application/json" \
+  -d '{"outV":"4256", "label":"codes_in", "inV":"4208","language_percentage":0.7 }' || json_pp
+
+//output:
+{"requestId":"aaa41726-b8a0-42b3-9d06-072dc6bfc9c2","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":"odxck-3a8-8ph-38w","label":"codes_in","type":"edge","inVLabel":"language","outVLabel":"person","inV":4208,"outV":4256,"properties":{"language_percentage":0.7}}],"meta":{}}}
+
+//e2:
+
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/edges" \
+  -H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+  -H "Content-Type: application/json" \
+  -d '{"outV":"4256", "label":"codes_in", "inV":"4136","language_percentage":0.9 }' || json_pp
+
+
+//output:
+
+{"requestId":"e621d551-e1d2-4de8-b89d-e3f8de2e48af","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":"1cruac-3a8-8ph-36w","label":"codes_in","type":"edge","inVLabel":"language","outVLabel":"person","inV":4136,"outV":4256,"properties":{"language_percentage":0.9}}],"meta":{}}}
+
+
+//e3:
+
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/edges" \
+  -H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+  -H "Content-Type: application/json" \
+  -d '{"outV":"4240", "label":"codes_in", "inV":"4232","language_percentage":0.9 }' || json_pp
+
+//output:
+
+{"requestId":"ca02f55d-ccf6-419a-9d13-f3b51676ae26","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":"odxci-39s-8ph-39k","label":"codes_in","type":"edge","inVLabel":"language","outVLabel":"person","inV":4232,"outV":4240,"properties":{"language_percentage":0.9}}],"meta":{}}}
+
+//e4:
+
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/edges" \
+  -H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+  -H "Content-Type: application/json" \
+  -d '{"outV":"4344", "label":"codes_in", "inV":"4304","language_percentage":0.6 }' || json_pp
+
+//output:
+{"requestId":"5214fbe6-fb2d-4bac-b2c1-48d1f34b72a9","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":"odxcv-3co-8ph-3bk","label":"codes_in","type":"edge","inVLabel":"language","outVLabel":"person","inV":4304,"outV":4344,"properties":{"language_percentage":0.6}}],"meta":{}}}
+
+//e5:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/edges" \
+  -H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+  -H "Content-Type: application/json" \
+  -d '{"outV":"4344", "label":"codes_in", "inV":"4160","language_percentage":0.4 }' || json_pp
+
+//output:
+
+{"requestId":"51a0e1f6-b542-4f10-bab4-b3bfb7738f9b","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":"odxr3-3co-8ph-37k","label":"codes_in","type":"edge","inVLabel":"language","outVLabel":"person","inV":4160,"outV":4344,"properties":{"language_percentage":0.4}}],"meta":{}}}
+
+
+//e6:
+curl -X "POST" "https://ibmgraph-alpha.ng.bluemix.net/74a21773-92ce-4b86-ac22-875ca39133c3/sampletwo/edges" \
+  -H 'Authorization: gds-token ODExMDFmNGItYmMwMy00NTY1LTk5OWQtMzUzZGZjMDE2MWRhOjE1MDYyNzAwNDcwNDA6aEkwYlRlRHJ5VDFPNnNFbjJhRzZDNVFIc1dmTk5JSTd5clMxSU5Ib3h0WT0=' \
+  -H "Content-Type: application/json" \
+  -d '{"outV":"4272", "label":"codes_in", "inV":"4136","language_percentage":1.0 }' || json_pp
+
+//output:
+
+{"requestId":"98382933-ca61-42ee-874e-24254bc500ac","status":{"message":"","code":200,"attributes":{}},"result":{"data":[{"id":"odxcm-3ao-8ph-36w","label":"codes_in","type":"edge","inVLabel":"language","outVLabel":"person","inV":4136,"outV":4272,"properties":{"language_percentage":1}}],"meta":{}}}
+
+
+
+
